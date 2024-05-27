@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:outsourced_pages/utils/models/call_tracker.dart';
+import 'package:outsourced_pages/utils/models/expert_filter_model.dart';
 import 'package:outsourced_pages/utils/models/project.dart';
 import 'package:outsourced_pages/utils/models/user.dart';
 import 'package:outsourced_pages/utils/sample_data.dart';
+
 import "models/available_expert.dart";
 
 class GlobalBloc with ChangeNotifier {
+  // all experts list
+  List<AvailableExpert> _allExperts = [];
+  // filtered experts list based on the filters applied
+  List<AvailableExpert> filteredExperts = [];
+  // List of calls
+  late List<CallTracker> callList;
+
+  // get all experts list
+  List<AvailableExpert> get allExperts => _allExperts;
+
+  // List of filters to be applied
+  List<ExpertFilterModel> filters = [
+    ExpertFilterModel(filterValues: [], heading: 'status'),
+    ExpertFilterModel(filterValues: [], heading: 'Favorite status'),
+    ExpertFilterModel(filterValues: [], heading: 'Filter by angle'),
+    ExpertFilterModel(filterValues: [], heading: 'Geography'),
+    ExpertFilterModel(filterValues: [], heading: 'Expert network'),
+  ];
   // Example filter variables
   bool favoriteFilter = false;
   String geographyFilter = '';
@@ -79,7 +99,6 @@ class GlobalBloc with ChangeNotifier {
   late List<Project> userProjectList;
   late List<User> userList;
   late List<AvailableExpert> expertList;
-  late List<CallTracker> callList;
   late User currentUser;
 
   List<AvailableExpert> get expertListStream => expertList;
@@ -93,7 +112,7 @@ class GlobalBloc with ChangeNotifier {
     List<CallTracker> fetchedCalls = Samples.callTrackers;
     try {
       List<Project> fetchedProjects = Samples.sampleProjects;
-      this.projectList = fetchedProjects;
+      projectList = fetchedProjects;
     } catch (e) {
       print('Error fetching projects: $e');
     }
@@ -123,7 +142,23 @@ class GlobalBloc with ChangeNotifier {
         .toList();
 
     this.userProjectList = filteredProjects;
+    notifyListeners();
+  }
 
+  Future<void> getData() async {
+    _allExperts = Samples.experts;
+    callList = Samples.callTrackers;
+    filteredExperts.clear();
+    filteredExperts.addAll(_allExperts);
+    updateExpertFilters();
+    filterExperts();
+
+    notifyListeners();
+  }
+
+  Future<void> filterAvailableExpert(List<ExpertFilterModel> filters) async {
+    // Filter the experts based on the filters
+    // filteredExperts = allExperts.where((expert) => applyFilters(expert)).toList();
     notifyListeners();
   }
 
@@ -184,5 +219,109 @@ class GlobalBloc with ChangeNotifier {
       callList[index].favorite = !(callList[index].favorite);
       notifyListeners();
     }
+  }
+
+  Future<void> filterExperts() async {
+    filteredExperts.clear();
+    List<AvailableExpert> allExpertA = [..._allExperts];
+    _removeExtraExpert(allExpertA, filters[0],
+        (expert, filterValue) => expert.status == filterValue.value);
+    _removeExtraExpert(
+        allExpertA,
+        filters[1],
+        (expert, filterValue) =>
+            (expert.favorite ? "Favorite" : "Not Favorite") ==
+            filterValue.value);
+    _removeExtraExpert(allExpertA, filters[2],
+        (expert, filterValue) => expert.angle == filterValue.value);
+    _removeExtraExpert(allExpertA, filters[3],
+        (expert, filterValue) => expert.geography == filterValue.value);
+    _removeExtraExpert(allExpertA, filters[4],
+        (expert, filterValue) => expert.expertNetworkName == filterValue.value);
+    filteredExperts.clear();
+    filteredExperts.addAll(allExpertA);
+    // notifyListeners();
+  }
+
+  void _removeExtraExpert(
+      List<AvailableExpert> allExpertA,
+      ExpertFilterModel filterModel,
+      bool Function(AvailableExpert, ExpertFilterValues) condition) {
+    if (filterModel.filterValues.any((ExpertFilterValues e) => e.isSelected)) {
+      for (ExpertFilterValues filterValue in filterModel.filterValues) {
+        if (!filterValue.isSelected) {
+          allExpertA.removeWhere((expert) => condition(expert, filterValue));
+        }
+      }
+    } else {
+      print("No filter selected");
+    }
+  }
+
+  Future<void> updateExpertFilters() async {
+    filterExperts();
+    //update state of filters
+    List<ExpertFilterModel> expertFiltersTemp = [];
+    expertFiltersTemp.addAll(filters.map((e) => e.copyWith()));
+    expertFiltersTemp[0].filterValues = _updateSingleFilters(
+      expertFiltersTemp[0],
+      (expert) => expert.status,
+    );
+    expertFiltersTemp[1].filterValues = _updateSingleFilters(
+      expertFiltersTemp[1],
+      (expert) => expert.favorite ? "Favorite" : "Not Favorite",
+    );
+    expertFiltersTemp[2].filterValues = _updateSingleFilters(
+      expertFiltersTemp[2],
+      (expert) => expert.angle,
+    );
+    expertFiltersTemp[3].filterValues = _updateSingleFilters(
+      expertFiltersTemp[3],
+      (expert) => expert.geography,
+    );
+    expertFiltersTemp[4].filterValues = _updateSingleFilters(
+      expertFiltersTemp[4],
+      (expert) => expert.expertNetworkName,
+    );
+    // update state of filters
+    for (ExpertFilterModel filter in expertFiltersTemp) {
+      filter.filterValues = filter.filterValues
+          .map((e) => e.copyWith(
+              isSelected: _isFilterSelected(filter.heading, e.value)))
+          .toList();
+    }
+    filters = expertFiltersTemp;
+    notifyListeners();
+  }
+
+  bool _isFilterSelected(String filterName, String value) {
+    try {
+      return filters
+          .firstWhere((element) => element.heading == filterName)
+          .filterValues
+          .firstWhere((element) => element.value == value)
+          .isSelected;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  List<ExpertFilterValues> _updateSingleFilters(
+    ExpertFilterModel filter,
+    String Function(AvailableExpert) toElement,
+  ) {
+    //update state of filters
+    filter.filterValues = _allExperts
+        .map(toElement)
+        .toSet()
+        .map((status) => ExpertFilterValues(
+            value: status,
+            isSelected: false,
+            count: filteredExperts
+                .where((expert) => toElement(expert) == status)
+                .length
+                .toString()))
+        .toList();
+    return filter.filterValues;
   }
 }

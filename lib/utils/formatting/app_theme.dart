@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Color scheme, please consult
 // * https://pub.dev/packages/flex_color_scheme
@@ -13,6 +14,12 @@ const Color wgerPrimaryColorLight = Color(0xff94B2DB);
 const Color wgerSecondaryColor = Color(0xffe63946);
 const Color wgerSecondaryColorLight = Color(0xffF6B4BA);
 const Color wgerTertiaryColor = Color(0xFF6CA450);
+const Color greyColor = Color(0xff868C98);
+const Color blueColor = Color(0xff375DFB);
+const Color offWhite = Color(0xffF2F4F6);
+const Color greenColor = Color(0xff428817);
+const Color labelBgColor = Color(0xff38C793);
+const Color yellowColor = Color(0xffFFDD00);
 
 const FlexSubThemesData wgerSubThemeData = FlexSubThemesData(
   fabSchemeColor: SchemeColor.secondary,
@@ -111,6 +118,7 @@ const wgerTextTheme = TextTheme(
 final wgerLightTheme = FlexThemeData.light(
   colorScheme: schemeLight,
   useMaterial3: true,
+  fontFamily: GoogleFonts.inter().fontFamily,
   appBarStyle: FlexAppBarStyle.primary,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -118,6 +126,7 @@ final wgerLightTheme = FlexThemeData.light(
 
 final wgerDarkTheme = FlexThemeData.dark(
   colorScheme: schemeDark,
+  fontFamily: GoogleFonts.inter().fontFamily,
   useMaterial3: true,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -126,6 +135,7 @@ final wgerDarkTheme = FlexThemeData.dark(
 final wgerLightThemeHc = FlexThemeData.light(
   colorScheme: schemeLightHc,
   useMaterial3: true,
+  fontFamily: GoogleFonts.inter().fontFamily,
   appBarStyle: FlexAppBarStyle.primary,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -134,6 +144,7 @@ final wgerLightThemeHc = FlexThemeData.light(
 final wgerDarkThemeHc = FlexThemeData.dark(
   colorScheme: schemeDarkHc,
   useMaterial3: true,
+  fontFamily: GoogleFonts.inter().fontFamily,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
 );

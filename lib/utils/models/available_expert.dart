@@ -14,7 +14,9 @@ class AvailableExpert {
   String geography;
   String angle;
   String status;
+
   int AIAssessment; // Changed to non-nullable
+  String aIAnalysis;
   String comments; // Changed to non-nullable
   final String availability;
   final String expertNetworkName;
@@ -22,6 +24,7 @@ class AvailableExpert {
   List<String> screeningQuestions;
   String addedExpertBy;
   DateTime dateAddedExpert;
+  String trends;
 
   AvailableExpert({
     this.isSelected = false,
@@ -39,6 +42,7 @@ class AvailableExpert {
     required this.angle,
     required this.status,
     required this.AIAssessment, // Non-nullable
+    required this.aIAnalysis,
     required this.comments, // Non-nullable
     required this.availability,
     required this.expertNetworkName,
@@ -46,6 +50,7 @@ class AvailableExpert {
     required this.screeningQuestions,
     required this.addedExpertBy,
     required this.dateAddedExpert,
+    required this.trends,
   });
 
   factory AvailableExpert.fromJson(Map<String, dynamic> json) {
@@ -71,13 +76,17 @@ class AvailableExpert {
       angle: json['angle'],
       status: json['status'],
       AIAssessment: json['AIAssessment'], // Assume presence in JSON
+      aIAnalysis: json['aIAnalysis'],
       comments: json['comments'], // Assume presence in JSON
       availability: json['availability'],
       expertNetworkName: json['expertNetworkName'],
       cost: json['cost'].toDouble(),
       screeningQuestions: screeningQuestionsList,
       addedExpertBy: json['addedExpertBy'],
-      dateAddedExpert: DateTime.parse(json['dateAddedExpert']),
+      dateAddedExpert: DateTime.parse(
+        json['dateAddedExpert'],
+      ),
+      trends: json['trends'],
     );
   }
 
@@ -103,6 +112,7 @@ class AvailableExpert {
       'dateAddedExpert':
           dateAddedExpert.toIso8601String().replaceFirst(RegExp(r'\.\d+'), '') +
               'Z',
+      'trends': trends,
     };
   }
 }

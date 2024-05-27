@@ -20,6 +20,9 @@ class Samples {
 
   static List<AvailableExpert> experts = List.generate(10, (index) {
     return AvailableExpert(
+      favorite: index == 1,
+      trends: index % 2 == 0 ? 'Trend ${index + 1}' : "",
+      aIAnalysis: index % 2 == 0 ? 'Ai Analysis ${index + 1}' : "lorem ipsum",
       expertId: 'exp${index + 1}',
       name: 'Expert Name ${index + 1}',
       organizationId: 'org${index % 3 + 1}',
@@ -49,10 +52,15 @@ class Samples {
 
   static List<CallTracker> callTrackers = List.generate(5, (index) {
     return CallTracker(
+        inviteSent: index % 3 == 0,
         expertId: 'exp${index + 1}',
         name: 'Expert Name ${index + 1}',
         projectId: 'projectxyz',
         organizationId: 'org${index % 3 + 1}',
+        organizationName: 'Organization ${index % 3 + 1}',
+        source: 'Source ${index % 3 + 1}',
+        sourceByCompany: 'Company ${index % 3 + 1}',
+        attribution: 'Attribution ${index % 3 + 1}',
         title: 'Expert Title ${index + 1}',
         company: 'Company ${index % 4 + 1}',
         companyType: index % 2 == 0 ? 'Public' : 'Private',
