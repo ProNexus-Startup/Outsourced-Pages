@@ -5,6 +5,10 @@ class CallTracker {
   String name;
   String projectId;
   String organizationId; // Added to match the Go model
+  String organizationName;
+  String source;
+  String sourceByCompany;
+  String attribution;
   String title;
   String company;
   String companyType;
@@ -36,6 +40,10 @@ class CallTracker {
     required this.projectId,
     this.favorite = false,
     required this.organizationId, // Ensure this is initialized
+    required this.organizationName,
+    required this.source,
+    required this.sourceByCompany,
+    required this.attribution,
     required this.title,
     required this.company,
     required this.companyType,
@@ -69,6 +77,10 @@ class CallTracker {
       projectId: json['projectId'],
       favorite: json['favorite'] ?? false,
       organizationId: json['organizationId'], // Added
+      organizationName: json['organizationName'],
+      source: json['source'],
+      sourceByCompany: json['sourceByCompany'],
+      attribution: json['attribution'],
       title: json['title'],
       company: json['company'],
       companyType: json['companyType'],

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:outsourced_pages/pages/available_experts_page.dart';
 import 'package:outsourced_pages/pages/call_tracker_page.dart';
+import 'package:outsourced_pages/pages/home_page.dart';
 import 'package:outsourced_pages/utils/formatting/app_theme.dart';
 import 'package:outsourced_pages/utils/global_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Provider<GlobalBloc>(
+  runApp(ListenableProvider<GlobalBloc>(
     create: (_) => GlobalBloc(),
     child: ProNexus(),
   ));
@@ -32,8 +33,10 @@ class _ProNexusState extends State<ProNexus> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ProNexus',
+      initialRoute: '/available-expert',
       routes: {
-        '/': (context) => AvailableExpertsDashboard(),
+        '/': (context) => HomePage(),
+        '/available-expert': (context) => AvailableExpertsDashboard(),
         '/call-tracker': (context) => CallTrackerDashboard(),
       },
       theme: wgerLightTheme,
