@@ -26,15 +26,16 @@ class _AvailableExpertsDashboardState extends State<AvailableExpertsDashboard> {
   @override
   void initState() {
     super.initState();
-    // _loadData();
+    _loadData();
   }
 
-  // Future<void> _loadData() async {
-  //   // final GlobalBloc globalBloc =
-  //   //     Provider.of<GlobalBloc>(context, listen: false);
-  //   // globalBloc.onUserLogin(widget.token);
-  //   context.read<GlobalBloc>().onUserLogin(widget.token);
-  // }
+  Future<void> _loadData() async {
+    // final GlobalBloc globalBloc =
+    //     Provider.of<GlobalBloc>(context, listen: false);
+    // globalBloc.onUserLogin(widget.token);
+    // context.read<GlobalBloc>().onUserLogin(widget.token);
+    Provider.of<GlobalBloc>(context, listen: false).getData();
+  }
 
   // Update this based on checkbox changes
   void updateSelection(bool isSelected) {
@@ -198,18 +199,23 @@ class _AvailableExpertsDashboardState extends State<AvailableExpertsDashboard> {
                     style: const TextStyle(
                         fontSize: 40, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 20),
-                ActionCard(
-                  title: 'Shown as: Compact List',
-                  leadingIcon: Image.asset('assets/icons/sort_desc.png',
-                      height: 20, width: 20),
-                  trailingIcon: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: greyColor,
-                  ),
-                ),
+                // ActionCard(
+                //   title: 'Shown as: Compact List',
+                //   leadingIcon: Image.asset('assets/icons/sort_desc.png',
+                //       height: 20, width: 20),
+                //   trailingIcon: const Icon(
+                //     Icons.keyboard_arrow_down,
+                //     color: greyColor,
+                //   ),
+                // ),
                 const SizedBox(width: 20),
                 ActionCard(
                   title: 'Search Live Projects',
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                  controller: globalBloc.searchController,
+                  isTextfield: true,
                   leadingIcon: Image.asset('assets/icons/search.png',
                       height: 24, width: 24),
                 ),
@@ -228,6 +234,7 @@ class _AvailableExpertsDashboardState extends State<AvailableExpertsDashboard> {
                   SizedBox(
                     width: 310,
                     child: Sidebar(
+                      globalBloc: globalBloc,
                       onFilterValueSelected:
                           (ExpertFilterValues filterValue, bool isSelected) {
                         setState(() {

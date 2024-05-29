@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 import 'package:outsourced_pages/utils/formatting/app_theme.dart';
 import 'package:outsourced_pages/utils/models/extent_model.dart';
@@ -76,8 +76,8 @@ class _ExpertTableState extends State<CallTable> {
                 child: Text(
                   header[vicinity.column],
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontFamily: GoogleFonts.epilogue().fontFamily),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
@@ -137,7 +137,7 @@ class _ExpertTableState extends State<CallTable> {
     ExtentModel(123),
     ExtentModel(92),
     ExtentModel(150),
-    ExtentModel(260),
+    ExtentModel(150),
     ExtentModel(190),
     ExtentModel(150),
     ExtentModel(150),
@@ -156,19 +156,24 @@ class _ExpertTableState extends State<CallTable> {
             (callData.inviteSent)
                 ? Image.asset('assets/icons/user_check.png',
                     height: 24, width: 24)
-                : Text('No', style: _textStyle),
+                : Text(
+                    'No',
+                    style: _textStyle,
+                    textAlign: TextAlign.center,
+                  ),
           ],
         );
       case 1:
-        return Text(callData.comments, style: _textStyle);
+        return Text(callData.name,
+            style: _textStyle, textAlign: TextAlign.center);
       case 2:
         return Text(DateFormat('MM/dd/yyyy').format(callData.dateAddedCall),
-            style: _textStyle);
+            style: _textStyle, textAlign: TextAlign.center);
       case 3:
         return Text(DateFormat('hh:mm a').format(callData.dateAddedCall),
-            style: _textStyle);
+            style: _textStyle, textAlign: TextAlign.center);
       case 4:
-        return Text('2 Hours', style: _textStyle);
+        return Text('2 Hours', style: _textStyle, textAlign: TextAlign.center);
       case 5:
         return Column(
           children: [
@@ -195,7 +200,6 @@ class _ExpertTableState extends State<CallTable> {
                     const SizedBox(width: 8),
                     Text(callData.angle,
                         style: TextStyle(
-                          fontFamily: GoogleFonts.epilogue().fontFamily,
                           color: callData.status == 'Active' ||
                                   callData.status == 'Completed'
                               ? labelBgColor
@@ -206,33 +210,41 @@ class _ExpertTableState extends State<CallTable> {
           ],
         );
       case 6:
-        return Text(callData.angle, style: _textStyle);
+        return Text(callData.angle,
+            style: _textStyle, textAlign: TextAlign.center);
       case 7:
-        return Text(callData.title, style: _textStyle);
+        return Text(callData.title,
+            style: _textStyle, textAlign: TextAlign.center);
       case 8:
-        return Text(callData.organizationName, style: _textStyle);
+        return Text(callData.organizationName,
+            style: _textStyle, textAlign: TextAlign.center);
       case 9:
-        return Text(callData.companyType, style: _textStyle);
+        return Text(callData.companyType,
+            style: _textStyle, textAlign: TextAlign.center);
       case 10:
-        return Text(callData.source, style: _textStyle);
+        return Text(callData.source,
+            style: _textStyle, textAlign: TextAlign.center);
       case 11:
-        return Text(callData.cost.toString(), style: _textStyle);
+        return Text(callData.cost.toString(),
+            style: _textStyle, textAlign: TextAlign.center);
       case 12:
         return Text(callData.paidStatus ? 'Yes' : 'No',
             style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily,
                 color: callData.paidStatus ? Colors.green : Colors.red));
       case 13:
-        return Text(callData.sourceByCompany, style: _textStyle);
+        return Text(callData.sourceByCompany,
+            style: _textStyle, textAlign: TextAlign.center);
 
       case 14:
-        return Text(callData.attribution, style: _textStyle);
+        return Text(callData.attribution,
+            style: _textStyle, textAlign: TextAlign.center);
       case 15:
         return ratingWidget(callData.rating ?? 0);
 
       default:
-        return Text('No data',
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(
+          'No data',
+        );
     }
   }
 
@@ -242,8 +254,7 @@ class _ExpertTableState extends State<CallTable> {
     height: 2,
   );
 
-  final TextStyle _textStyle = TextStyle(
-      fontFamily: GoogleFonts.epilogue().fontFamily, color: greyColor);
+  final TextStyle _textStyle = TextStyle(color: greyColor);
 
   Widget ratingWidget(int rating) {
     int totalRating = 5;

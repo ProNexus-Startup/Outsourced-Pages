@@ -13,7 +13,6 @@ class SubMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<GlobalBloc>(context, listen: false).getData();
     return Container(
       height: 80,
 

@@ -11,12 +11,51 @@ class GlobalBloc with ChangeNotifier {
   // all experts list
   List<AvailableExpert> _allExperts = [];
   // filtered experts list based on the filters applied
-  List<AvailableExpert> filteredExperts = [];
+  List<AvailableExpert> _filteredExperts = [];
   // List of calls
   late List<CallTracker> callList;
 
   // get all experts list
   List<AvailableExpert> get allExperts => _allExperts;
+
+  List<AvailableExpert> get filteredExperts {
+    List<AvailableExpert> experts = [];
+    for (AvailableExpert expert in _filteredExperts) {
+      if (expert.title
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()) ||
+          expert.name
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()) ||
+          expert.company
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase())) {
+        experts.add(expert);
+      }
+    }
+    return experts;
+  }
+
+  List<CallTracker> get filteredCalls {
+    List<CallTracker> calls = [];
+    for (CallTracker call in callList) {
+      if (call.title
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()) ||
+          call.name
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()) ||
+          call.company
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase())) {
+        calls.add(call);
+      }
+    }
+    return calls;
+  }
+
+  // controller for search
+  TextEditingController searchController = TextEditingController();
 
   // List of filters to be applied
   List<ExpertFilterModel> filters = [
@@ -148,8 +187,8 @@ class GlobalBloc with ChangeNotifier {
   Future<void> getData() async {
     _allExperts = Samples.experts;
     callList = Samples.callTrackers;
-    filteredExperts.clear();
-    filteredExperts.addAll(_allExperts);
+    _filteredExperts.clear();
+    _filteredExperts.addAll(_allExperts);
     updateExpertFilters();
     filterExperts();
 
@@ -158,7 +197,7 @@ class GlobalBloc with ChangeNotifier {
 
   Future<void> filterAvailableExpert(List<ExpertFilterModel> filters) async {
     // Filter the experts based on the filters
-    // filteredExperts = allExperts.where((expert) => applyFilters(expert)).toList();
+    // _filteredExperts = allExperts.where((expert) => applyFilters(expert)).toList();
     notifyListeners();
   }
 
@@ -222,7 +261,7 @@ class GlobalBloc with ChangeNotifier {
   }
 
   Future<void> filterExperts() async {
-    filteredExperts.clear();
+    _filteredExperts.clear();
     List<AvailableExpert> allExpertA = [..._allExperts];
     _removeExtraExpert(allExpertA, filters[0],
         (expert, filterValue) => expert.status == filterValue.value);
@@ -238,8 +277,8 @@ class GlobalBloc with ChangeNotifier {
         (expert, filterValue) => expert.geography == filterValue.value);
     _removeExtraExpert(allExpertA, filters[4],
         (expert, filterValue) => expert.expertNetworkName == filterValue.value);
-    filteredExperts.clear();
-    filteredExperts.addAll(allExpertA);
+    _filteredExperts.clear();
+    _filteredExperts.addAll(allExpertA);
     // notifyListeners();
   }
 
@@ -317,7 +356,7 @@ class GlobalBloc with ChangeNotifier {
         .map((status) => ExpertFilterValues(
             value: status,
             isSelected: false,
-            count: filteredExperts
+            count: _filteredExperts
                 .where((expert) => toElement(expert) == status)
                 .length
                 .toString()))

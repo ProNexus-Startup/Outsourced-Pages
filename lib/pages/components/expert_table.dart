@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:outsourced_pages/utils/formatting/app_theme.dart';
 import 'package:outsourced_pages/utils/models/extent_model.dart';
 import 'package:outsourced_pages/utils/models/available_expert.dart';
@@ -70,14 +70,16 @@ class _ExpertTableState extends State<ExpertTable> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
                   header[vicinity.column],
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: GoogleFonts.epilogue().fontFamily),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               if (header[vicinity.column] == 'AI match') ...[
@@ -212,8 +214,7 @@ class _ExpertTableState extends State<ExpertTable> {
         );
       case 1:
         return Text(expertData.comments,
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 2:
         return SizedBox(
           child: Column(
@@ -224,7 +225,7 @@ class _ExpertTableState extends State<ExpertTable> {
                     height: 30,
                     decoration: BoxDecoration(
                         color: expertData.status == 'Active'
-                            ? const Color(0xffFFDD00)
+                            ? greenColor
                             : const Color(0xffF97071),
                         borderRadius: BorderRadius.circular(6)),
                     child: Padding(
@@ -255,25 +256,20 @@ class _ExpertTableState extends State<ExpertTable> {
           ),
         );
       case 3:
-        return Text(expertData.name,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.name, textAlign: TextAlign.center);
       case 4:
-        return Text(expertData.title,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.title, textAlign: TextAlign.center);
       case 5:
-        return Text(expertData.company,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.company, textAlign: TextAlign.center);
       case 6:
-        return Text(expertData.yearsAtCompany,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.yearsAtCompany, textAlign: TextAlign.center);
       case 7:
-        return Text(expertData.geography,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.geography, textAlign: TextAlign.center);
       case 8:
-        return Text(expertData.angle,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.angle, textAlign: TextAlign.center);
       case 9:
         return Text("${expertData.AIAssessment}%",
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontSize: 20,
@@ -284,42 +280,32 @@ class _ExpertTableState extends State<ExpertTable> {
                         : const Color(0xffFF0000)));
       case 10:
         return Text(expertData.aIAnalysis,
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 11:
         return Text(expertData.comments,
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 12:
         return Text(expertData.availability,
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 13:
-        return Text(expertData.expertNetworkName,
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.expertNetworkName, textAlign: TextAlign.center);
       case 14:
-        return Text(expertData.cost.toString(),
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return Text(expertData.cost.toString(), textAlign: TextAlign.center);
       case 15:
         return Text(expertData.screeningQuestions[0],
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 16:
         return Text(expertData.screeningQuestions[1],
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 17:
         return Text(expertData.screeningQuestions[2],
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
       case 18:
         return Text(expertData.trends,
-            style: TextStyle(
-                fontFamily: GoogleFonts.epilogue().fontFamily, fontSize: 12));
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12));
 
       default:
-        return Text('No data',
-            style: TextStyle(fontFamily: GoogleFonts.epilogue().fontFamily));
+        return const Text('No data');
     }
   }
 }

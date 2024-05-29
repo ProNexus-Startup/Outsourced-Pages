@@ -23,14 +23,15 @@ class _CallTrackerDashboardState extends State<CallTrackerDashboard> {
   @override
   void initState() {
     super.initState();
-    // _loadData();
+    _loadData();
   }
 
-  // Future<void> _loadData() async {
-  //   final GlobalBloc globalBloc =
-  //       Provider.of<GlobalBloc>(context, listen: false);
-  //   globalBloc.onUserLogin(widget.token);
-  // }
+  Future<void> _loadData() async {
+    // final GlobalBloc globalBloc =
+    //     Provider.of<GlobalBloc>(context, listen: false);
+    // globalBloc.onUserLogin(widget.token);
+    Provider.of<GlobalBloc>(context, listen: false).getData();
+  }
 
   // Update this based on checkbox changes
   void updateSelection(bool isSelected) {
@@ -189,18 +190,23 @@ class _CallTrackerDashboardState extends State<CallTrackerDashboard> {
                   hasBorder: false,
                 ),
                 const SizedBox(width: 50),
-                ActionCard(
-                  title: 'Shown as: Compact List',
-                  leadingIcon: Image.asset('assets/icons/sort_desc.png',
-                      height: 20, width: 20),
-                  trailingIcon: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: greyColor,
-                  ),
-                ),
-                const SizedBox(width: 20),
+                // ActionCard(
+                //   title: 'Shown as: Compact List',
+                //   leadingIcon: Image.asset('assets/icons/sort_desc.png',
+                //       height: 20, width: 20),
+                //   trailingIcon: const Icon(
+                //     Icons.keyboard_arrow_down,
+                //     color: greyColor,
+                //   ),
+                // ),
+                // const SizedBox(width: 20),
                 ActionCard(
                   title: 'Search Live Projects',
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                  controller: globalBloc.searchController,
+                  isTextfield: true,
                   leadingIcon: Image.asset('assets/icons/search.png',
                       height: 24, width: 24),
                 ),
@@ -212,7 +218,7 @@ class _CallTrackerDashboardState extends State<CallTrackerDashboard> {
               ],
             ),
             const SizedBox(height: 26),
-            Expanded(child: CallTable(callsList: globalBloc.callList)),
+            Expanded(child: CallTable(callsList: globalBloc.filteredCalls)),
           ]));
     });
   }
