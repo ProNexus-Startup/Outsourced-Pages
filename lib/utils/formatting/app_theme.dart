@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // Color scheme, please consult
 // * https://pub.dev/packages/flex_color_scheme
@@ -118,7 +115,6 @@ const wgerTextTheme = TextTheme(
 final wgerLightTheme = FlexThemeData.light(
   colorScheme: schemeLight,
   useMaterial3: true,
-  fontFamily: GoogleFonts.inter().fontFamily,
   appBarStyle: FlexAppBarStyle.primary,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -126,7 +122,6 @@ final wgerLightTheme = FlexThemeData.light(
 
 final wgerDarkTheme = FlexThemeData.dark(
   colorScheme: schemeDark,
-  fontFamily: GoogleFonts.inter().fontFamily,
   useMaterial3: true,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -135,7 +130,6 @@ final wgerDarkTheme = FlexThemeData.dark(
 final wgerLightThemeHc = FlexThemeData.light(
   colorScheme: schemeLightHc,
   useMaterial3: true,
-  fontFamily: GoogleFonts.inter().fontFamily,
   appBarStyle: FlexAppBarStyle.primary,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
@@ -144,7 +138,6 @@ final wgerLightThemeHc = FlexThemeData.light(
 final wgerDarkThemeHc = FlexThemeData.dark(
   colorScheme: schemeDarkHc,
   useMaterial3: true,
-  fontFamily: GoogleFonts.inter().fontFamily,
   subThemesData: wgerSubThemeData,
   textTheme: wgerTextTheme,
 );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ActionCard extends StatelessWidget {
   const ActionCard(
@@ -10,6 +9,8 @@ class ActionCard extends StatelessWidget {
       this.foregroundColor,
       this.hasBorder = true,
       this.trailingIcon,
+      this.controller,
+      this.onChanged,
       this.isTextfield = false});
   final Widget? leadingIcon;
   final String title;
@@ -18,6 +19,8 @@ class ActionCard extends StatelessWidget {
   final bool hasBorder;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +37,31 @@ class ActionCard extends StatelessWidget {
           if (leadingIcon != null) leadingIcon!,
           const SizedBox(width: 10),
           isTextfield
-              ? const SizedBox()
+              ? SizedBox(
+                  width: 200,
+                  child: TextFormField(
+                    onChanged: onChanged,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      isCollapsed: true,
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: title,
+                    ),
+                  ),
+                )
               : Text(
                   title,
                   style: TextStyle(
                     fontSize: 14,
                     color: foregroundColor ?? Colors.black,
-                    fontFamily: GoogleFonts.rubik().fontFamily,
                   ),
                 ),
-          const SizedBox(width: 10),
+          const SizedBox(
+            width: 10,
+          ),
           if (trailingIcon != null) trailingIcon!,
         ],
       ),

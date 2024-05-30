@@ -32,6 +32,7 @@ class _ProNexusState extends State<ProNexus> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ProNexus',
       initialRoute: '/available-expert',
       routes: {

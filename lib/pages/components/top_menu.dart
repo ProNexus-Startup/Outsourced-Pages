@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:outsourced_pages/pages/home_page.dart';
 import 'package:outsourced_pages/utils/formatting/app_theme.dart';
 import 'package:outsourced_pages/utils/global_bloc.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +18,18 @@ class TopMenu extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(
-            width: 190,
-          ),
+          // const SizedBox(width: 40),
           Expanded(
             child: Row(
               children: [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Image.asset('assets/images/logo.jpg', height: 40),
+                ),
                 TextButton(
                   onPressed: () async {
                     Navigator.pushNamed(context, '/');
@@ -99,9 +103,7 @@ class TopMenu extends StatelessWidget {
           //   color: Colors.white,
           //   onPressed: () {},
           // ),
-          const SizedBox(
-            width: 160,
-          ),
+          // const SizedBox(width: 40),
         ],
       ),
     );
